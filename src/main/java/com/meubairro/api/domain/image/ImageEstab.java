@@ -1,4 +1,4 @@
-package com.meubairro.api.domain.estab;
+package com.meubairro.api.domain.image;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,27 +11,17 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Table(name = "estabs")
 @Entity
+@Table (name= "image")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Estab {
+public class ImageEstab {
     @Id
     @GeneratedValue
     private UUID id;
-    private String name;
-    private String category;
-    private String description;
-    private String address;
-    private String time;
-    private String phone;
-    private String image;
-    private String services;
-    private String active;
-    private String createAt;
-    private String updateAt;
-
-
+    private String url;
+    private String ordem;
+    private String estab;
 }
