@@ -1,13 +1,8 @@
 package com.meubairro.api.domain.image;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.meubairro.api.domain.estab.Estab;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -17,11 +12,25 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ImageEstab {
     @Id
     @GeneratedValue
     private UUID id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estabelecimento_id", nullable = false)
+    private Estab estab;
+
+    @Column(name = "url", nullable = false, length = 500)
     private String url;
-    private String ordem;
-    private String estab;
+
+    @Column(name = "nome_arquivo", length = 255)
+    private String nomeArquivo;
+
+    @Column(name = "content_type", length = 50)
+    private String contentType;
+
+    @Column(name = "ordem", nullable = false)
+    private Integer ordem;
 }

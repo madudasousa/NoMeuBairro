@@ -1,14 +1,14 @@
 package com.meubairro.api.domain.estab;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.meubairro.api.domain.image.ImageEstab;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Table(name = "estabs")
@@ -26,12 +26,13 @@ public class Estab {
     private String description;
     private String address;
     private String time;
-    private String phone;
-    private String image;
+    private Integer phone;
     private String services;
-    private String active;
-    private String createAt;
+    private Boolean active;
+    private Long createAt;
     private String updateAt;
 
-
+    @OneToMany(mappedBy = "estab", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("ordem ASC")
+    private List<ImageEstab> imagens = new ArrayList<>();
 }
