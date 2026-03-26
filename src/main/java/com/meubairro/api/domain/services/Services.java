@@ -1,13 +1,8 @@
 package com.meubairro.api.domain.services;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.meubairro.api.domain.estab.Estab;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -17,10 +12,16 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Services {
     @Id
     @GeneratedValue
     private UUID id;
+
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
-    private String estab;
+
+    @ManyToOne
+    @JoinColumn(name = "estab_id")
+    private Estab estab;
 }
