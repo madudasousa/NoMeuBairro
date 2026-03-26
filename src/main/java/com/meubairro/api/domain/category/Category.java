@@ -1,13 +1,8 @@
 package com.meubairro.api.domain.category;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.UUID;
 
 @Entity
@@ -16,10 +11,16 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Category {
     @Id
     @GeneratedValue
     private UUID id;
+
+    @Column(name = "name", nullable = false, length = 100,  unique = true)
     private String name;
+
+    // Slug é a versão do nome sem espaços e sem acentos, em minúsculo
+    @Column(name = "name", nullable = false, length = 100,  unique = true)
     private String slug;
 }
