@@ -7,9 +7,10 @@ CREATE TABLE estabs(
     description VARCHAR(250) NOT NULL,
     address VARCHAR(150) NOT NULL,
     time VARCHAR(100) NOT NULL,
-    phone INT NOT NULL,
+    phone VARCHAR NOT NULL,
     services VARCHAR(100) NOT NULL,
     active BOOLEAN NOT NULL,
     createAt TIMESTAMP NOT NULL,
     updateAt TIMESTAMP NOT NULL
 );
+

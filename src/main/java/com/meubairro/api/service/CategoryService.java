@@ -26,7 +26,7 @@ public class CategoryService {
         }
 
         //verifica duplicata pelo nome antes de salvar
-        if (categoryRepository.existsByNomeIgnoreCase(request.name())) {
+        if (categoryRepository.existsByNameIgnoreCase(request.name())) {
             throw new RuntimeException("Já existe uma categoria com o mesmo nome: " + request.name());
         }
 
@@ -47,7 +47,7 @@ public class CategoryService {
 
     //lista todas as categorias em ordem alfabetica
     public List<CategoryResponse> listar() {
-        return categoryRepository.findAllByOrderByNomeAsc()
+        return categoryRepository.findAllByOrderByNameAsc()
                 .stream()
                 .map(this::toResponse)
                 .toList();
@@ -72,7 +72,7 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada"));
 
-        if (categoryRepository.existsByNomeIgnoreCase(request.name())
+        if (categoryRepository.existsByNameIgnoreCase(request.name())
         && !category.getName().equalsIgnoreCase(request.name())){
             throw new RuntimeException("Já existe uma categoria com o mesmo nome: " + request.name());
         }

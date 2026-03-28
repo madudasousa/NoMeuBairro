@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table (name = "categorys")
+@Table(name = "category")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -21,6 +21,6 @@ public class Category {
     private String name;
 
     // Slug é a versão do nome sem espaços e sem acentos, em minúsculo
-    @Column(name = "name", nullable = false, length = 100,  unique = true)
+    @Column(name = "slug", nullable = false, length = 100, unique = true)
     private String slug;
 }

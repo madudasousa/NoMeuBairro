@@ -11,17 +11,17 @@ import java.util.UUID;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     // Busca todas as categorias em ordem alfabética
-    List<Category> findAllByOrderByNomeAsc();
+    List<Category> findAllByOrderByNameAsc();
 
     // Busca por slug — usado quando o usuário clica em uma categoria na home
     Optional<Category> findBySlug(String slug);
 
     // Busca por nome ignorando maiúsculas e minúsculas
-    Optional<Category> findByNomeIgnoreCase(String nome);
+    Optional<Category> findByNameIgnoreCase(String name);
 
     // Verifica se já existe uma categoria com esse slug antes de salvar
     boolean existsBySlug(String slug);
 
     // Verifica se já existe uma categoria com esse nome antes de salvar
-    boolean existsByNomeIgnoreCase(String nome);
+    boolean existsByNameIgnoreCase(String name);
 }

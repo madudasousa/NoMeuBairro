@@ -4,6 +4,7 @@ import com.meubairro.api.domain.estab.Estab;
 import com.meubairro.api.domain.services.Services;
 import com.meubairro.api.dto.request.ServiceRequest;
 import com.meubairro.api.dto.response.ServiceResponse;
+import com.meubairro.api.repositories.EstabRepository;
 import com.meubairro.api.repositories.ServiceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -21,13 +22,12 @@ public class ServicesService {
     private static final int LIMITE_SERVICOS = 20;
 
     private final ServiceRepository serviceRepository;
-
-    private final EstabService estabService;
+    private final EstabRepository estabRepository;
 
     //salva uma lista de serviços para um estabelecimento
     @Transactional
     public List<ServiceResponse> salvar(UUID estabId, ServiceRequest request) {
-        Estab estab = estabService.findById(estabId);
+        Estab estab = buscarEstabPorId(estabId);
 
         long totalAtual = serviceRepository.findByEstabIdOrderByNameAsc(estabId).size();
 
@@ -46,7 +46,7 @@ public class ServicesService {
 
     //lista todos os serviços de um estabelecimento em ordem alfabetica
     public List<ServiceResponse> listarPorEstab(UUID estabId) {
-        estabService.findById(estabId);
+        buscarEstabPorId(estabId);
         return serviceRepository.findByEstabIdOrderByNameAsc(estabId).stream().map(this::toResponse).toList();
     }
     //// Remove um serviço específico
@@ -64,7 +64,7 @@ public class ServicesService {
     // Substitui toda a lista de serviços de um estabelecimento
     @Transactional
     public List<ServiceResponse> substituir(UUID estabId, ServiceRequest request) {
-        estabService.findById(estabId);
+        buscarEstabPorId(estabId);
         serviceRepository.deleteAllByEstabId(estabId);
 
         // Reutiliza o método salvar com a lista nova
@@ -77,5 +77,10 @@ public class ServicesService {
                 service.getId(),
                 service.getName(),
                 service.getEstab().getId());
+    }
+
+    private Estab buscarEstabPorId(UUID estabId) {
+        return estabRepository.findById(estabId)
+                .orElseThrow(() -> new EntityNotFoundException("Estabelecimento não encontrado: " + estabId));
     }
 }
