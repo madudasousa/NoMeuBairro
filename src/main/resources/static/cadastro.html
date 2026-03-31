@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoMeuBairro</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <main class="page">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand__icon">
+            <img src="/static/img/logo.png" alt="NoMeuBairro" class="brand__logo" />
+          </div>
+          <div class="brand__text">
+            <div class="brand__title">NoMeuBairro</div>
+            <div class="brand__subtitle">
+              Conectando você ao comercio locais
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="card">
+        <h1 class="card__title">Cadastrar Novo Estabelecimento</h1>
+
+        <form id="formEstabelecimento" novalidate>
+          <div class="field">
+            <label for="nome">Nome do estabelecimento:</label>
+            <input
+              id="nome"
+              name="nome"
+              type="text"
+              placeholder="Ex: Mecânica Reverse"
+            />
+            <small class="error" data-error-for="nome"></small>
+          </div>
+
+          <div class="field">
+            <label for="categoriaInput">Categoria:</label>
+            <input list="categoriasExistentes" id="categoriaInput" placeholder="Busque ou digite uma nova...">
+            <datalist id="categoriasExistentes"></datalist>
+            <small class="error" data-error-for="categoriaInput"></small>
+          </div>
+
+          <div class="field">
+            <label for="descricao">Descrição do Negócio:</label>
+            <textarea
+              id="descricao"
+              name="descricao"
+              placeholder="Descreva seu Negócio, o que oferece e seus diferenciais"
+            ></textarea>
+            <small class="error" data-error-for="descricao"></small>
+          </div>
+
+          <div class="field">
+            <label for="bairro">Endereço:</label>
+            <input
+              id="bairro"
+              name="bairro"
+              type="text"
+              placeholder="Ex: Cidade Dutra"
+            />
+            <small class="error" data-error-for="bairro"></small>
+          </div>
+
+          <div class="field">
+            <label for="horario">Horário de Funcionamento:</label>
+            <input
+              id="horario"
+              name="horario"
+              type="text"
+              placeholder="Ex: Seg à Sex: 8h às 18h"
+            />
+            <small class="error" data-error-for="horario"></small>
+          </div>
+
+          <div class="field">
+            <label for="whatsapp">WhatsApp:</label>
+            <input
+              id="whatsapp"
+              name="whatsapp"
+              type="text"
+              inputmode="numeric"
+              placeholder="11 99999-9999"
+            />
+            <small class="error" data-error-for="whatsapp"></small>
+          </div>
+
+          <div class="field">
+            <label for="imagem">Upload da Imagem:</label>
+            <input id="imagem" name="imagem" type="file" accept="image/*" multiple/>
+            <small class="hint"
+              >Formatos: JPG, PNG, WEBP. Tamanho recomendado: até 2MB.</small
+            >
+
+            <!-- Preview -->
+            <div class="image-preview" id="imagePreview" aria-hidden="true">
+              <div class="image-preview__placeholder">
+                Pré-visualização da imagem
+              </div>
+              <img id="previewImg" alt="Pré-visualização" />
+              <button
+                type="button"
+                class="image-preview__remove"
+                id="removeImageBtn"
+              >
+                Remover imagem
+              </button>
+            </div>
+
+            <small class="error" data-error-for="imagem"></small>
+          </div>
+
+          <div class="field">
+            <label>Serviços Oferecidos:</label>
+
+            <div class="services-row">
+              <input
+                type="text"
+                id="novoServico"
+                placeholder="Digite um serviço e clique"
+                autocomplete="off"
+              />
+              <button type="button" class="btn btn--primary" id="addServicoBtn">
+                + Adicionar
+              </button>
+            </div>
+
+            <ul class="services-list" id="listaServicos"></ul>
+            <small class="error" data-error-for="servicos"></small>
+          </div>
+
+          <div class="actions">
+            <button type="reset" class="btn btn--ghost" id="cancelBtn">
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn--primary" id="submitBtn">
+              Cadastrar Estabelecimento
+            </button>
+          </div>
+
+          <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </main>
+
+    <script src="cadscript.js"></script>
+  </body>
+</html>

@@ -27,7 +27,6 @@ public class Estab {
 
     @Column(nullable = false, length = 100)
     private String name;
-
     @Column(length = 500)
     private String description;
     @Column(length = 250)
@@ -53,10 +52,10 @@ public class Estab {
     private Boolean active;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(name = "createAt", updatable = false)
     private LocalDateTime createAt;
 
     @UpdateTimestamp
-    @Column
+    @Column(name = "updateAt")
     private LocalDateTime updateAt;
 }

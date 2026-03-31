@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estabelecimento</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="estabelecimento-page">
+    <main class="page estabelecimento">
+      <section class="card estabelecimento-card">
+        <!-- Nome -->
+        <div class="title-bar">
+          <h1 id="storeName">Nome do Estabelecimento</h1>
+        </div>
+
+        <!-- Descrição -->
+        <p class="store-desc" id="storeDesc">Descrição do estabelecimento.</p>
+
+        <!-- Serviços oferecidos -->
+        <h2 class="section-title">Serviços Oferecidos:</h2>
+        <div class="service-tags" id="serviceTags"></div>
+
+        <!-- Carrossel / Galeria -->
+        <h2 class="section-title">Imagens:</h2>
+
+        <div class="carousel">
+          <button class="carousel-btn prev" id="prevBtn" type="button">
+            &#10094;
+          </button>
+
+          <div class="carousel-track-wrapper">
+            <div class="carousel-track" id="carouselTrack"></div>
+          </div>
+
+          <button class="carousel-btn next" id="nextBtn" type="button">
+            &#10095;
+          </button>
+        </div>
+
+        <!-- Localização -->
+        <h2 class="section-title">Localização:</h2>
+
+        <a id="mapLink" class="map-link" target="_blank" rel="noopener">
+          <div class="map-preview">
+            <iframe
+              id="mapFrame"
+              class="map-frame"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=S%C3%A3o%20Paulo&output=embed"
+            >
+            </iframe>
+          </div>
+        </a>
+
+        <!-- WhatsApp -->
+        <a id="whatsBtn" class="whatsapp-btn" target="_blank" rel="noopener">
+          <div class="brand__icon">
+            <img src="/static/img/whatsapp-icon.png" class="whatsapp-icon" />
+          </div>
+          Entrar em contato via WhatsApp
+        </a>
+      </section>
+    </main>
+
+    <!-- WhatsApp flutuante -->
+    <a id="floatingWhatsBtn" class="floating-whatsapp-btn" target="_blank" rel="noopener" style="display: none;">
+      <img src="/static/img/whatsapp-icon.png" alt="WhatsApp" />
+    </a>
+
+    <!-- Modal da galeria -->
+    <div class="gallery-modal" id="galleryModal">
+      <button class="gallery-modal__close" id="closeModalBtn" type="button">
+        &times;
+      </button>
+      <button
+        class="gallery-modal__nav gallery-modal__nav--prev"
+        id="modalPrevBtn"
+        type="button"
+      >
+        &#10094;
+      </button>
+
+      <div class="gallery-modal__content">
+        <img id="modalImage" src="" alt="Imagem ampliada do estabelecimento" />
+      </div>
+
+      <button
+        class="gallery-modal__nav gallery-modal__nav--next"
+        id="modalNextBtn"
+        type="button"
+      >
+        &#10095;
+      </button>
+    </div>
+
+    <script src="estab.js"></script>
+  </body>
+</html>

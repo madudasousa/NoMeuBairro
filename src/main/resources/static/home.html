@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoMeuBairro</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="home-page">
+    <main class="home-container">
+      <!-- TOPO -->
+      <header class="home-header">
+        <div class="brand">
+          <div class="brand__icon">
+            <img src="/static/img/logo.png" alt="NoMeuBairro" class="brand__logo" />
+          </div>
+
+          <div class="brand__text">
+            <h1 class="brand__title">NoMeuBairro</h1>
+            <p class="brand__subtitle">Conectando você ao comercios locais</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- HERO / BANNER -->
+      <section class="hero">
+        <h2 class="hero__title">Descubra os Comércios do Seu Bairro</h2>
+        <p class="hero__text">
+          Encontre facilmente pizzarias, mercados, oficinas, salões e muito mais
+          na sua região
+        </p>
+
+        <form class="search-box" id="searchForm">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-box__input"
+            placeholder="Buscar por tipo de comércio"
+          />
+          <button type="submit" class="search-box__button">Buscar</button>
+        </form>
+
+        <p class="hero__small">Seu comércio local, mais perto de você</p>
+      </section>
+
+      <!-- CATEGORIAS -->
+      <section class="categories">
+        <div class="categories__header">
+          <img
+            src="/static/img/filtro.png"
+            alt="NoMeuBairro"
+            class="categories__icon"
+          />
+        </div>
+
+        <div class="categories__tags" id="categoryTags">
+          <!-- JS -->
+        </div>
+      </section>
+
+      <!-- LISTA DAS SEÇÕES -->
+      <section id="sectionsContainer" class="sections-container">
+        <!-- JS -->
+      </section>
+    </main>
+
+    <script src="home.js"></script>
+  </body>
+</html>

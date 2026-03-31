@@ -11,22 +11,36 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/estabalecimentos")
+@Controller
+@RequestMapping({"/estabelecimentos"})
 @RequiredArgsConstructor
 public class EstabController {
 
-    private EstabService service;
+    private final EstabService service;
+
+    @GetMapping("/home")
+    public ModelAndView home() {
+        return new ModelAndView("forward:/home.html");
+    }
+
+    @GetMapping("/cadastro")
+    public ModelAndView abrirCadastro() {
+        return new ModelAndView("forward:/cadastro.html");
+    }
 
     @PostMapping
+    @ResponseBody
     public ResponseEntity<EstabResponse> create(@RequestBody EstabCreateRequest request){
         return ResponseEntity.ok(service.createEstab(request));
      }
 
      @GetMapping
+    @ResponseBody
     public  ResponseEntity<Page<EstabResumeResponse>> listar(
              @RequestParam(required = false) String name,
              @RequestParam(required = false) String categorySlug,
@@ -38,12 +52,14 @@ public class EstabController {
      }
 
      @GetMapping("/{id}")
+        @ResponseBody
         public ResponseEntity<EstabResponse> buscarPorId(@PathVariable UUID id){
          return ResponseEntity.ok(service.buscarPorId(id));
      }
 
      //editar dados principais de um estabelecimento
      @PutMapping("/{id}")
+    @ResponseBody
     public ResponseEntity<EstabResponse> editar(@PathVariable UUID id, @RequestBody EstabUpdateRequest request){
          return ResponseEntity.ok(service.editar(id, request));
      }

@@ -1,9 +1,12 @@
 package com.meubairro.api.mapper;
 
 import com.meubairro.api.domain.estab.Estab;
+import com.meubairro.api.domain.services.Services;
 import com.meubairro.api.util.WhatsappUtil;
 import com.meubairro.api.dto.response.*;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 
 @Component
 public class EstabMapper {
@@ -42,7 +45,8 @@ public class EstabMapper {
             );
         }
 
-        var service = e.getServices().stream()
+        var servicesList = e.getServices() != null ? e.getServices() : new ArrayList<Services>();
+        var service = servicesList.stream()
                 .map(s -> new ServiceResponse(s.getId(), s.getName(), e.getId()))
                 .toList();
 

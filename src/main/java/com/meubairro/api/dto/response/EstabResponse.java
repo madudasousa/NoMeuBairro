@@ -6,7 +6,7 @@ import java.util.UUID;
 public record EstabResponse(
         UUID id,
         String name,
-        String descriptiom,
+        String description,
         String address,
         String time,
         String phone,

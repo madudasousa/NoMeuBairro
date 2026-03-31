@@ -22,6 +22,6 @@ public class Services {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "estab_id")
+    @JoinColumn(name = "estabs_id")
     private Estab estab;
 }

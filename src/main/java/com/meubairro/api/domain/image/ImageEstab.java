@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table (name= "image")
+@Table (name= "imageEstab")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class ImageEstab {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estabelecimento_id", nullable = false)
+    @JoinColumn(name = "estabs_id", nullable = false)
     private Estab estab;
 
     @Column(name = "url", nullable = false, length = 500)
