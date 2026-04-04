@@ -119,7 +119,7 @@ async function carregarDadosDoEstabelecimento() {
 
   try {
     // Chamada ao endpoint do EstabController
-    const response = await fetch(`http://localhost:8080/estabalecimentos/${estabId}`);
+    const response = await fetch(`http://localhost:8080/estabelecimentos/${estabId}`);
 
     if (!response.ok) throw new Error("Erro ao buscar dados do servidor");
 
@@ -127,8 +127,7 @@ async function carregarDadosDoEstabelecimento() {
 
     // Preenche os dados básicos
     setText("storeName", data.name);
-    // Nota: No seu DTO Java está escrito 'descriptiom' com 'm'
-    setText("storeDesc", data.descriptiom || "Sem descrição disponível.");
+    setText("storeDesc", data.description || "Sem descrição disponível.");
 
     // Renderiza serviços e carrossel
     renderServiceTags(data.services);

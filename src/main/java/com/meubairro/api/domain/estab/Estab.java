@@ -42,10 +42,12 @@ public class Estab {
 
     @OneToMany(mappedBy = "estab", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("name ASC")
+    @Builder.Default
     private List<Services> services = new ArrayList<>();
 
     @OneToMany(mappedBy = "estab", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordem ASC")
+    @Builder.Default
     private List<ImageEstab> images = new ArrayList<>();
 
     @Column(nullable = false)

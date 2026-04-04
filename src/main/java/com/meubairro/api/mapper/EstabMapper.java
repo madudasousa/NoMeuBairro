@@ -7,6 +7,7 @@ import com.meubairro.api.dto.response.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Component
 public class EstabMapper {
@@ -19,7 +20,8 @@ public class EstabMapper {
             ? e.getDescription().substring(0, 100) + "..." : e.getDescription();
         }
 
-        String imageCapa = e.getImages().isEmpty() ? null : e.getImages().get(0).getUrl();
+        var imagesList = e.getImages() != null ? e.getImages() : Collections.<com.meubairro.api.domain.image.ImageEstab>emptyList();
+        String imageCapa = imagesList.isEmpty() ? null : imagesList.get(0).getUrl();
 
         String nameCategory = e.getCategory() != null ? e.getCategory().getName() : null;
 
@@ -50,7 +52,8 @@ public class EstabMapper {
                 .map(s -> new ServiceResponse(s.getId(), s.getName(), e.getId()))
                 .toList();
 
-        var images = e.getImages().stream()
+        var imagesList = e.getImages() != null ? e.getImages() : Collections.<com.meubairro.api.domain.image.ImageEstab>emptyList();
+        var images = imagesList.stream()
                 .map(i -> new ImageResponse(
                         i.getId(), e.getId(), i.getUrl(), i.getNomeArquivo(), i.getContentType(), i.getOrdem()
                 )).toList();

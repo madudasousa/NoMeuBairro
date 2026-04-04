@@ -152,14 +152,14 @@ $("#formEstabelecimento").addEventListener("submit", async (e) => {
       for (let i = 0; i < arquivos.length; i++) {
         formData.append("arquivos", arquivos[i]); // "arquivos" mapeia para o @RequestParam no Java
       }
-      await fetch(`http://localhost:8080/estabelecimento/${estabSalvo.id}/imagens`, {
+      await fetch(`http://localhost:8080/estabelecimentos/${estabSalvo.id}/imagens`, {
         method: "POST",
         body: formData
       });
     }
 
     showToast("Cadastrado com sucesso!", "ok");
-    setTimeout(() => { window.location.href = `estab.html?id=${estabSalvo.id}`; }, 1500);
+    setTimeout(() => { window.location.href = `/estab.html?id=${estabSalvo.id}`; }, 1500);
   } catch (err) {
     console.error(err);
     showToast("Erro ao conectar com o servidor.", "err");

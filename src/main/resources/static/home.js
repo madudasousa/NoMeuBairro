@@ -137,7 +137,7 @@ function createCard(item) {
   // Ao clicar no card, salva o ID na URL e navega para a tela de detalhes
   // O estab.js vai ler esse ID e buscar os dados completos na API
   card.addEventListener("click", () => {
-    window.location.href = `estab.html?id=${item.id}`;
+    window.location.href = `/estab.html?id=${item.id}`;
   });
 
   return card;

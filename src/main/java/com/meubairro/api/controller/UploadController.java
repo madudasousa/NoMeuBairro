@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/estabelecimento/{estabId}/imagens")
+@RequestMapping({"/estabelecimentos/{estabId}/imagens", "/estabelecimento/{estabId}/imagens"})
 @RequiredArgsConstructor
 public class UploadController {
 
