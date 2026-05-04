@@ -1,6 +1,4 @@
-/* --- HELPER FUNCTIONS --- */
 
-// Remove caracteres não numéricos
 function onlyDigits(str) {
   return (str || "").replace(/\D/g, "");
 }
@@ -88,7 +86,6 @@ function updateCarousel() {
 }
 
 /* --- MODAL FUNCTIONS --- */
-
 function openModal(index) {
   modalIndex = index;
   updateModalImage();
@@ -144,7 +141,7 @@ async function carregarDadosDoEstabelecimento() {
     const mapLink = document.getElementById("mapLink");
     if (mapFrame) {
       const endereco = data.address || "São Paulo";
-      mapFrame.src = `https://www.google.com/maps/embed/v1/place?key=SUA_CHAVE_AQUI&q=${encodeURIComponent(endereco)}`;
+      mapFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(endereco)}&output=embed`;
       if (mapLink) mapLink.href = buildGoogleMapsLink(endereco);
     }
 

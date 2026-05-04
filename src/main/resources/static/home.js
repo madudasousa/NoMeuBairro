@@ -1,6 +1,4 @@
-
 const API_URL = "http://localhost:8080";
-
 /* ELEMENTOS */
 const categoryTagsEl = document.getElementById("categoryTags");
 const sectionsContainerEl = document.getElementById("sectionsContainer");

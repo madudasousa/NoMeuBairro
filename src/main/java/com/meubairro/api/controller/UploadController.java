@@ -49,6 +49,5 @@ public class UploadController {
 
         return ResponseEntity.ok(imagemService.reordenarImagens(estabId, idsNaOrdem));
     }
-
 }
 

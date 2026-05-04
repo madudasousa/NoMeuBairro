@@ -17,7 +17,7 @@ public class UploadService {
     private static final long TAMANHO_MAXIMO_BYTES = 5 * 1024 * 1024; // 5MB
     private static final List<String> CONTENT_TYPES_PERMITIDOS = List.of(
             "image/jpeg",
-            "image/png"
+             "image/png"
     );
 
     @Value("${upload.dir:uploads}")
