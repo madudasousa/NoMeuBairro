@@ -218,7 +218,6 @@ input:focus, textarea:focus{
   display:none;
   position:relative;
 }
-
 .image-preview img{
   width:100%;
   border-radius:8px;
@@ -226,13 +225,11 @@ input:focus, textarea:focus{
   max-height:220px;
   object-fit:cover;
 }
-
 .image-preview__placeholder{
   font-size:12px;
   color:var(--muted);
   margin-bottom:8px;
 }
-
 .image-preview__remove{
   margin-top:10px;
   width:100%;
@@ -247,7 +244,6 @@ input:focus, textarea:focus{
 .image-preview__remove:hover{
   background: rgba(239,68,68,.12);
 }
-
 .toast{
   margin-top:14px;
   display:none;
@@ -548,45 +544,36 @@ input:focus, textarea:focus{
     width:120px;
     height:76px;
   }
-
   .map-frame{
     height:260px;
   }
 }
-
 .whatsapp-icon{
   width: 30px;   
   height: 30px;  
   object-fit: contain;
   display:block;
 }
-/* =========================
-   HOME / LISTAGEM
-========================= */
-
+/*  HOME / LISTAGEM*/
 .home-page{
   margin:0;
   background:#eeeeee;
   font-family:Arial, Helvetica, sans-serif;
   color:#111827;
 }
-
 .home-container{
   width:min(430px, 92vw);
   margin:0 auto;
   padding:4px 0 24px;
 }
-
 .home-header{
   padding:10px 8px 12px;
 }
-
 .brand{
   display:flex;
   align-items:flex-start;
   gap:8px;
 }
-
 .brand__icon{
   width:26px;
   height:26px;
@@ -596,27 +583,23 @@ input:focus, textarea:focus{
   overflow:hidden;
   flex-shrink:0;
 }
-
 .brand__logo{
   width:22px;
   height:22px;
   object-fit:contain;
   display:block;
 }
-
 .brand__text{
   display:flex;
   flex-direction:column;
   gap:2px;
 }
-
 .brand__title{
   margin:0;
   font-size:15px;
   font-weight:800;
   line-height:1;
 }
-
 .brand__subtitle{
   margin:0;
   font-size:10px;
@@ -633,7 +616,6 @@ input:focus, textarea:focus{
   color:#fff;
   text-align:center;
 }
-
 .hero__title{
   margin:0 auto 10px;
   max-width:240px;
@@ -641,7 +623,6 @@ input:focus, textarea:focus{
   font-weight:800;
   line-height:1.25;
 }
-
 .hero__text{
   margin:0 auto 14px;
   max-width:240px;
@@ -649,7 +630,6 @@ input:focus, textarea:focus{
   line-height:1.35;
   color:rgba(255,255,255,.92);
 }
-
 .search-box{
   width:100%;
   max-width:270px;
@@ -661,7 +641,6 @@ input:focus, textarea:focus{
   padding:8px;
   gap:6px;
 }
-
 .search-box__input{
   flex:1;
   border:none;
@@ -671,11 +650,9 @@ input:focus, textarea:focus{
   font-size:12px;
   color:#111827;
 }
-
 .search-box__input::placeholder{
   color:#9ca3af;
 }
-
 .search-box__button{
   border:none;
   background:#2e6df6;
@@ -696,27 +673,23 @@ input:focus, textarea:focus{
 .categories{
   padding:12px 6px 0;
 }
-
 .categories__header{
   display:flex;
   align-items:center;
   gap:8px;
   margin-bottom:10px;
 }
-
 .categories__icon{
   width: 20px;   
   height: 20px;  
   object-fit: contain;
   display:block;
 }
-
 .categories__tags{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
 }
-
 .category-tag{
   border:none;
   background:#e5e5e5;
@@ -727,11 +700,9 @@ input:focus, textarea:focus{
   cursor:pointer;
   transition:.15s ease;
 }
-
 .category-tag:hover{
   background:#dcdcdc;
 }
-
 .category-tag.is-active{
   background:#2e6df6;
   color:#fff;
@@ -741,24 +712,20 @@ input:focus, textarea:focus{
 .sections-container{
   padding:14px 6px 0;
 }
-
 .category-section{
   margin-bottom:18px;
 }
-
 .category-section__header{
   display:flex;
   align-items:center;
   justify-content:space-between;
   margin-bottom:8px;
 }
-
 .category-section__title{
   font-size:13px;
   font-weight:700;
   margin:0;
 }
-
 .category-section__arrow{
   color:#2e6df6;
   font-size:14px;
@@ -773,7 +740,6 @@ input:focus, textarea:focus{
   padding-bottom:4px;
   scroll-behavior:smooth;
 }
-
 .cards-row::-webkit-scrollbar{
   height:6px;
 }
@@ -781,7 +747,6 @@ input:focus, textarea:focus{
   background:#d0d0d0;
   border-radius:999px;
 }
-
 /* CARD */
 .store-card-mini{
   min-width:96px;
@@ -795,29 +760,24 @@ input:focus, textarea:focus{
   flex-shrink:0;
   transition:transform .12s ease, box-shadow .12s ease;
 }
-
 .store-card-mini:hover{
   transform:translateY(-2px);
   box-shadow:0 6px 14px rgba(0,0,0,.12);
 }
-
 .store-card-mini__image{
   width:100%;
   height:60px;
   background:#ececec;
 }
-
 .store-card-mini__image img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
 }
-
 .store-card-mini__body{
   padding:8px 7px 9px;
 }
-
 .store-card-mini__name{
   margin:0 0 4px;
   font-size:9px;
@@ -826,7 +786,6 @@ input:focus, textarea:focus{
   color:#111827;
   min-height:22px;
 }
-
 .store-card-mini__desc{
   margin:0 0 6px;
   font-size:7px;
@@ -834,17 +793,14 @@ input:focus, textarea:focus{
   color:#6b7280;
   min-height:28px;
 }
-
 .store-card-mini__meta{
   font-size:6.5px;
   color:#4b5563;
   line-height:1.4;
 }
-
 .store-card-mini__meta div{
   margin-bottom:3px;
 }
-
 .store-card-mini__footer{
   margin-top:8px;
   text-align:center;
@@ -852,7 +808,6 @@ input:focus, textarea:focus{
   color:#111827;
   font-weight:700;
 }
-
 /* ESTADO VAZIO */
 .empty-state{
   background:#fff;
@@ -869,95 +824,93 @@ input:focus, textarea:focus{
     width:680px;
     padding-top:14px;
   }
-
   .brand__icon{
     width:34px;
     height:34px;
   }
-
   .brand__logo{
     width:28px;
     height:28px;
   }
-
   .brand__title{
     font-size:20px;
   }
-
   .brand__subtitle{
     font-size:12px;
   }
-
   .hero{
     border-radius:10px;
     padding:26px 24px 20px;
   }
-
   .hero__title{
     max-width:420px;
     font-size:28px;
   }
-
   .hero__text{
     max-width:460px;
     font-size:14px;
   }
-
   .search-box{
     max-width:430px;
     padding:5px;
   }
-
   .search-box__input{
     font-size:13px;
     padding:11px 14px;
   }
-
   .search-box__button{
     font-size:12px;
     padding:10px 16px;
   }
-
   .hero__small{
     font-size:12px;
   }
-
   .category-section__title{
     font-size:18px;
   }
-
   .cards-row{
     gap:14px;
   }
-
   .store-card-mini{
     min-width:170px;
     width:170px;
   }
-
   .store-card-mini__image{
     height:110px;
   }
-
   .store-card-mini__body{
     padding:12px 10px 12px;
   }
-
   .store-card-mini__name{
     font-size:13px;
     min-height:34px;
   }
-
   .store-card-mini__desc{
     font-size:10px;
     min-height:38px;
   }
-
   .store-card-mini__meta{
     font-size:9px;
   }
-
   .store-card-mini__footer{
     font-size:9px;
   }
+}
+
+.nav-arrows {
+  padding: 8px 16px;
+  display: flex;
+  gap: 12px;
+}
+.nav-arrow {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.nav-arrow:hover {
+  background: #f0f0f0;
 }

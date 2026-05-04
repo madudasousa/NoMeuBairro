@@ -22,6 +22,6 @@ public class WhatsappUtil {
                 StandardCharsets.UTF_8
         );
 
-        return "https://wa.me/" + numeroLimpo;
+        return "https://wa.me/" + numeroLimpo + "?text=" + mensagem;
     }
 }

@@ -8,16 +8,43 @@
   </head>
   <body class="estabelecimento-page">
     <main class="page estabelecimento">
+      <header class="home-header" onclick="window.location.href='home.html'"
+              style="cursor:pointer;">
+        <div class="brand">
+          <div class="brand__icon">
+            <img src="img/logo.png" alt="NoMeuBairro" class="brand__logo" />
+          </div>
+          <div class="brand__text">
+            <h1 class="brand__title">NoMeuBairro</h1>
+            <p class="brand__subtitle">Conectando você ao comercios locais</p>
+          </div>
+        </div>
+      </header>
+      <nav class="nav-arrows">
+        <button class="nav-arrow" id="btnVoltar" onclick="history.back()"
+                style="display:none">&#8592; </button>
+        <button class="nav-arrow" id="btnAvancar" onclick="history.forward()"
+                style="display:none">&#8594;</button>
+      </nav>
+
+      <script>
+        // Voltar: mostra se veio de alguma página anterior
+        if (document.referrer) {
+          document.getElementById("btnVoltar").style.display = "inline-block";
+        }
+        // Avançar: mostra se o usuário já voltou e tem página para avançar
+        window.addEventListener("load", () => {
+          if (history.length > 1) {
+            document.getElementById("btnAvancar").style.display = "inline-block";
+          }
+        });
+      </script>
+
       <section class="card estabelecimento-card">
-        <!-- Nome -->
         <div class="title-bar">
           <h1 id="storeName">Nome do Estabelecimento</h1>
         </div>
-
-        <!-- Descrição -->
         <p class="store-desc" id="storeDesc">Descrição do estabelecimento.</p>
-
-        <!-- Serviços oferecidos -->
         <h2 class="section-title">Serviços Oferecidos:</h2>
         <div class="service-tags" id="serviceTags"></div>
 

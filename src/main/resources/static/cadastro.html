@@ -9,19 +9,24 @@
 
   <body>
     <main class="page">
-      <header class="topbar">
+      <header class="home-header" onclick="window.location.href='home.html'"
+              style="cursor:pointer;">
         <div class="brand">
           <div class="brand__icon">
-            <img src="/img/logo.png" alt="NoMeuBairro" class="brand__logo" />
+            <img src="img/logo.png" alt="NoMeuBairro" class="brand__logo" />
           </div>
           <div class="brand__text">
-            <div class="brand__title">NoMeuBairro</div>
-            <div class="brand__subtitle">
-              Conectando você ao comercio locais
-            </div>
+            <h1 class="brand__title">NoMeuBairro</h1>
+            <p class="brand__subtitle">Conectando você ao comercios locais</p>
           </div>
         </div>
       </header>
+
+      <script>
+        if (document.referrer) {
+          document.getElementById("btnVoltar").style.display = "inline-block";
+        }
+      </script>
 
       <section class="card">
         <h1 class="card__title">Cadastrar Novo Estabelecimento</h1>
