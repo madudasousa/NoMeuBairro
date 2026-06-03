@@ -29,6 +29,34 @@ function showError(message) {
   `;
 }
 
+/* BOTÃO CADASTRAR E ÍCONE DE LOGIN */
+function configurarAuth() {
+  const usuario = localStorage.getItem("usuario");
+  const headerAuth = document.getElementById("headerAuth");
+  const headerAuthText = document.getElementById("headerAuthText");
+
+  if (usuario) {
+    // Usuário logado — mostra o nome e vai para área do usuário ao clicar
+    const dados = JSON.parse(usuario);
+    headerAuthText.textContent = dados.nome.split(" ")[0]; // só o primeiro nome
+    headerAuthText.style.display = "block";
+    headerAuth.querySelector("img")?.remove();
+    headerAuth.title = "Logado como " + dados.nome;
+  }
+
+  // Botão de cadastrar estabelecimento
+  document.getElementById("btnCadastrarEstab").addEventListener("click", () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Logado — vai direto para o cadastro
+      window.location.href = "/cadastro.html";
+    } else {
+      // Não logado — vai para o login
+      window.location.href = "/login_cadastro.html";
+    }
+  });
+}
+
 async function fetchCategorias() {
   try {
     const res = await fetch(`${API_URL}/categorias`);
@@ -195,5 +223,6 @@ searchInputEl.addEventListener("input", () => {
 });
 
 /* INICIALIZAÇÃO */
+configurarAuth();
 fetchCategorias();
 fetchEstabelecimentos();

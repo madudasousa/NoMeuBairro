@@ -28,11 +28,9 @@
       </nav>
 
       <script>
-        // Voltar: mostra se veio de alguma página anterior
         if (document.referrer) {
           document.getElementById("btnVoltar").style.display = "inline-block";
         }
-        // Avançar: mostra se o usuário já voltou e tem página para avançar
         window.addEventListener("load", () => {
           if (history.length > 1) {
             document.getElementById("btnAvancar").style.display = "inline-block";

@@ -20,6 +20,11 @@
             <p class="brand__subtitle">Conectando você ao comercios locais</p>
           </div>
         </div>
+
+        <div class="header__auth" id="headerAuth" onclick="window.location.href='/login_cadastro.html'" style="cursor:pointer;">
+          <img src="/img/login.png" alt="Login" class="header__auth-icon" onerror="this.style.display='none';document.getElementById('headerAuthText').style.display='block'"/>
+          <span id="headerAuthText" style="display:none;">👤</span>
+        </div>
       </header>
 
       <!-- HERO / BANNER -->
@@ -42,17 +47,14 @@
 
         <p class="hero__small">Seu comércio local, mais perto de você</p>
       </section>
+      <div class="cadastrar-btn-wrap">
+        <button class="btn-cadastrar-estab" id="btnCadastrarEstab">
+          + Cadastrar meu estabelecimento
+        </button>
+      </div>
 
       <!-- CATEGORIAS -->
       <section class="categories">
-        <div class="categories__header">
-          <img
-            src="/img/filtro.png"
-            alt="NoMeuBairro"
-            class="categories__icon"
-          />
-        </div>
-
         <div class="categories__tags" id="categoryTags">
           <!-- JS -->
         </div>
