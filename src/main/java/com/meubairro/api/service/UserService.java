@@ -82,20 +82,24 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    private boolean validarCpf(String cpf){
+    private boolean validarCpf(String cpf) {
         if (cpf.chars().distinct().count() == 1) return false;
 
-        int[] numeros = cpf.chars().map(c -> c - '0').toArray();
+        int[] n = cpf.chars().map(c -> c - '0').toArray();
 
-        int soma =0;
-        for (int i = 0; i < 9; i++) soma += numeros[i] * (10 - i);
-        int primeiro = (soma * 10 % 11) % 10;
-        if (primeiro != numeros[9]) return false;
+        // Primeiro dígito
+        int soma = 0;
+        for (int i = 0; i < 9; i++) soma += n[i] * (10 - i);
+        int resto = soma % 11;
+        int primeiro = resto < 2 ? 0 : 11 - resto; // ← era % 10, correto é < 2
+        if (primeiro != n[9]) return false;
 
+        // Segundo dígito
         soma = 0;
-        for (int i = 0; i < 10; i++) soma += numeros[i] * (11 - 1);
-        int segundo = (soma * 10 % 11) % 10;
-        return segundo == numeros[10];
+        for (int i = 0; i < 10; i++) soma += n[i] * (11 - i);
+        resto = soma % 11;
+        int segundo = resto < 2 ? 0 : 11 - resto; // ← mesmo erro aqui
+        return segundo == n[10];
     }
 
     private boolean validarCnpj(String cnpj){
