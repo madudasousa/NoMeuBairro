@@ -124,6 +124,7 @@ $("#formEstabelecimento").addEventListener("submit", async (e) => {
   const categoryId = await obterOuCriarCategoria(nomeCategoria);
 
   const payload = {
+    document: $("documento").value,
     name: $("#nome").value,
     description: $("#descricao").value,
     address: $("#bairro").value,
@@ -131,7 +132,8 @@ $("#formEstabelecimento").addEventListener("submit", async (e) => {
     phone: onlyDigits($("#whatsapp").value),
     categoryId: categoryId, // Envia o UUID real para o backend
     services: [...services], // Envia a lista de strings para o ServicesService
-    active: true
+    active: true,
+    password: $("#senha").value
   };
 
   try {

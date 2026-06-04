@@ -18,19 +18,6 @@ public class AuthController {
 
     private final UserService userService;
 
-    // Cadastra um novo usuário (DONO ou CLIENTE)
-    // POST /auth/cadastro
-    // Body: { "nome": "João", "documento": "12345678909", "senha": "123456", "perfil": "CLIENTE" }
-    @PostMapping("/cadastro")
-    public ResponseEntity<?> cadastrar(@RequestBody CadastroRequest request) {
-        try {
-            userService.cadastrar(request);
-            return ResponseEntity.ok(Map.of("mensagem", "Cadastro realizado com sucesso!"));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(Map.of("erro", e.getMessage()));
-        }
-    }
-
     // Autentica o usuário e retorna o token JWT
     // POST /auth/login
     // Body: { "documento": "12345678909", "senha": "123456" }

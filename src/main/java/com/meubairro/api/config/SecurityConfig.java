@@ -1,6 +1,7 @@
 package com.meubairro.api.config;
 
 import com.meubairro.api.security.JwtFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,10 +41,8 @@ public class SecurityConfig {
                         // ROTAS PÚBLICAS — qualquer um acessa sem login
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
-                        .requestMatchers("/categorias").permitAll()
-                        .requestMatchers("/categorias/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/estabelecimentos").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/estabelecimentos/**").permitAll()
+                        .requestMatchers("/categorias", "/categorias/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/estabelecimentos", "/estabelecimentos/**").permitAll()
 
                         // Arquivos estáticos do frontend
                         .requestMatchers("/", "/*.html", "/*.js", "/*.css", "/img/**").permitAll()

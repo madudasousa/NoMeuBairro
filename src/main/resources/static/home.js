@@ -52,7 +52,7 @@ function configurarAuth() {
       window.location.href = "/cadastro.html";
     } else {
       // Não logado — vai para o login
-      window.location.href = "/login_cadastro.html";
+      window.location.href = "/login.html";
     }
   });
 }

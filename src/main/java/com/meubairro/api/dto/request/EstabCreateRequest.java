@@ -12,6 +12,7 @@ public record EstabCreateRequest(
         String phone,
         UUID categoryId,
         List<String> services,
-        Boolean active) {
-
-}
+        Boolean active,
+        String document,
+        String password
+) {}
