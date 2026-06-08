@@ -1,7 +1,7 @@
 package com.meubairro.api.service;
 
-import com.meubairro.api.domain.User.User;
-import com.meubairro.api.dto.request.CadastroRequest;
+import com.meubairro.api.domain.User;
+import com.meubairro.api.dto.request.ChangePasswordRequest;
 import com.meubairro.api.dto.request.LoginRequest;
 import com.meubairro.api.dto.response.LoginResponse;
 import com.meubairro.api.repositories.UserRepository;
@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,28 +30,6 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + document));
     }
 
-    @Transactional
-    public void cadastrar(CadastroRequest request){
-        String document = limparDocumento(request.documento());
-        validarDocumento (document);
-
-        if(repository.existsByDocument(document)){
-            throw new RuntimeException("Já existe uam conta com esse CPF/CNPJ.");
-        }
-
-        if (request.senha() == null || request.senha().length() < 6) {
-            throw new RuntimeException("A senha deve conter pelo menos 6 caracteres.");
-        }
-
-        User user = User.builder()
-                .name(request.nome().trim())
-                .document(document)
-                .password(passwordEncoder.encode(request.senha()))
-                .perfil(request.perfil())
-                .build();
-        repository.save(user);
-    }
-
     public LoginResponse login(LoginRequest request){
         String document = limparDocumento(request.documento());
 
@@ -59,64 +39,45 @@ public class UserService implements UserDetailsService {
             throw new BadCredentialsException("CPF/CNPJ ou senha inválidos.");
         }
 
+        if (user.getEstab() != null) {
+            if (Boolean.FALSE.equals(user.getEstab().getActiveAdmin())) {
+                throw new BadCredentialsException(
+                        "Seu estabelecimento foi desativado pelo administrador. Entre em contato para mais informações."
+                );
+            }
+        }
         String token = jwtService.gerarToken(user);
 
         return new LoginResponse(token, user.getId(), user.getName(), user.getPerfil());
     }
 
+    @Transactional
+    public void trocarSenha (UUID userId, ChangePasswordRequest request){
+        User user = repository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new RuntimeException("Senha atual incorreta.");
+        }
+
+        if (!request.newpassword().equals(request.confirmNewPassword())) {
+            throw new RuntimeException("A nova senha e a confirmação não coincidem.");
+        }
+
+        if (request.newpassword().length() < 6) {
+            throw new RuntimeException("A nova senha deve conter pelo menos 6 caracteres.");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.newpassword()));
+        repository.save(user);
+    }
+
+    public User buscarId(UUID id){
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+    }
+
     private String limparDocumento(String document){
         return (document == null ? "" : document).replaceAll("[^0-9]", "");
-    }
-
-    private void validarDocumento(String document){
-        if (document.length() == 11){
-            if (!validarCpf(document)){
-                throw new RuntimeException("CPF inválido.");
-            }
-        } else if (document.length() == 14) {
-            if (!validarCnpj(document)){
-                throw new RuntimeException("CNPJ inválido.");
-            }
-        }else {
-            throw new RuntimeException("Documento inválido. Informe um CPF (11 dígitos) ou CNPJ (14 dígitos).");
-        }
-    }
-
-    private boolean validarCpf(String cpf) {
-        if (cpf.chars().distinct().count() == 1) return false;
-
-        int[] n = cpf.chars().map(c -> c - '0').toArray();
-
-        // Primeiro dígito
-        int soma = 0;
-        for (int i = 0; i < 9; i++) soma += n[i] * (10 - i);
-        int resto = soma % 11;
-        int primeiro = resto < 2 ? 0 : 11 - resto; // ← era % 10, correto é < 2
-        if (primeiro != n[9]) return false;
-
-        // Segundo dígito
-        soma = 0;
-        for (int i = 0; i < 10; i++) soma += n[i] * (11 - i);
-        resto = soma % 11;
-        int segundo = resto < 2 ? 0 : 11 - resto; // ← mesmo erro aqui
-        return segundo == n[10];
-    }
-
-    private boolean validarCnpj(String cnpj){
-        if (cnpj.chars().distinct().count() == 1) return false;
-
-        int[] numeros = cnpj.chars().map(c -> c - '0').toArray();
-        int[] peso1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-        int[] peso2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-
-        int soma = 0;
-        for (int i = 0; i < 12; i++) soma += numeros[i] * peso1[i];
-        int primeiro = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        if (primeiro != numeros[12]) return false;
-
-        soma = 0;
-        for (int i = 0; i < 13; i++) soma += numeros[i] * peso2[i];
-        int segundo = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        return segundo == numeros[13];
     }
 }

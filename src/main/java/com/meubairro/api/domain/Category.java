@@ -1,4 +1,4 @@
-package com.meubairro.api.domain.category;
+package com.meubairro.api.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

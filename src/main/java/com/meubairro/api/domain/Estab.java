@@ -1,8 +1,5 @@
-package com.meubairro.api.domain.estab;
+package com.meubairro.api.domain;
 
-import com.meubairro.api.domain.category.Category;
-import com.meubairro.api.domain.image.ImageEstab;
-import com.meubairro.api.domain.services.Services;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,6 +38,7 @@ public class Estab {
     private Category category;
 
     @OneToMany(mappedBy = "estab", cascade = CascadeType.ALL, orphanRemoval = true)
+
     @OrderBy("name ASC")
     @Builder.Default
     private List<Services> services = new ArrayList<>();
@@ -50,8 +48,13 @@ public class Estab {
     @Builder.Default
     private List<ImageEstab> images = new ArrayList<>();
 
-    @Column(nullable = false)
-    private Boolean active;
+    @Column(name = "active_owner", nullable = false)
+    @Builder.Default
+    private Boolean activeOwner = true;
+
+    @Column(name = "active_admin", nullable = false)
+    @Builder.Default
+    private Boolean activeAdmin = true;
 
     @CreationTimestamp
     @Column(name = "createAt", updatable = false)
@@ -60,4 +63,9 @@ public class Estab {
     @UpdateTimestamp
     @Column(name = "updateAt")
     private LocalDateTime updateAt;
+
+    // loja só aparece na home se AMBOS forem true
+    public boolean isVisivelNaHome() {
+        return Boolean.TRUE.equals(activeOwner) && Boolean.TRUE.equals(activeAdmin);
+    }
 }

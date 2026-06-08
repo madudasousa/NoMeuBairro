@@ -1,6 +1,6 @@
 package com.meubairro.api.repositories;
 
-import com.meubairro.api.domain.category.Category;
+import com.meubairro.api.domain.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

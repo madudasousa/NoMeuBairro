@@ -1,6 +1,6 @@
 package com.meubairro.api.service;
 
-import com.meubairro.api.domain.category.Category;
+import com.meubairro.api.domain.Category;
 import com.meubairro.api.dto.request.CategoryRequest;
 import com.meubairro.api.dto.response.CategoryResponse;
 import com.meubairro.api.repositories.CategoryRepository;

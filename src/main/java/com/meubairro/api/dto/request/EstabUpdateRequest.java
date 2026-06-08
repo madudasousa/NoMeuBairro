@@ -9,5 +9,5 @@ public record EstabUpdateRequest(
         String time,
         String phone,
         UUID categoryId,
-        Boolean active
+        Boolean activeOwner
 ) { }

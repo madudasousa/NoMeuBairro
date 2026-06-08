@@ -1,6 +1,6 @@
 package com.meubairro.api.repositories;
 
-import com.meubairro.api.domain.estab.Estab;
+import com.meubairro.api.domain.Estab;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

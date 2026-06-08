@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -19,13 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-
-    public SecurityConfig(@Lazy JwtFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,28 +36,19 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(auth -> auth
-
-                        // ROTAS PÚBLICAS — qualquer um acessa sem login
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/usuarios/login").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/categorias", "/categorias/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/estabelecimentos", "/estabelecimentos/**").permitAll()
+                        // Cadastro de estab é público — cria dono + estab de uma vez
+                        .requestMatchers(HttpMethod.POST, "/estabelecimentos").permitAll()
 
                         // Arquivos estáticos do frontend
                         .requestMatchers("/", "/*.html", "/*.js", "/*.css", "/img/**").permitAll()
 
-                        // ROTAS PROTEGIDAS — só DONO pode cadastrar/editar/deletar estabelecimento
-                        .requestMatchers(HttpMethod.POST, "/estabelecimentos").hasRole("DONO")
-                        .requestMatchers(HttpMethod.PUT, "/estabelecimentos/**").hasRole("DONO")
-                        .requestMatchers(HttpMethod.DELETE, "/estabelecimentos/**").hasRole("DONO")
-                        .requestMatchers(HttpMethod.POST, "/estabelecimentos/*/imagens").hasRole("DONO")
-                        .requestMatchers(HttpMethod.DELETE, "/estabelecimentos/*/imagens/**").hasRole("DONO")
-
                         // Qualquer outra rota exige login
                         .anyRequest().authenticated()
                 )
-
-                // Registra o filtro JWT antes do filtro padrão de autenticação
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

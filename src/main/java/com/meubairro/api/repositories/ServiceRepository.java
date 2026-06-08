@@ -1,6 +1,6 @@
 package com.meubairro.api.repositories;
 
-import com.meubairro.api.domain.services.Services;
+import com.meubairro.api.domain.Services;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

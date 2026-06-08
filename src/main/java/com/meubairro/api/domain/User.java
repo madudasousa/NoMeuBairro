@@ -1,4 +1,4 @@
-package com.meubairro.api.domain.User;
+package com.meubairro.api.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,6 +36,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PerfilUser perfil;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estab_id")
+    private Estab estab;
 
     @CreationTimestamp
     @Column(name = "created", updatable = false)

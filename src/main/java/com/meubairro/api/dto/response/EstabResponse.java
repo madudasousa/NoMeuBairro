@@ -10,11 +10,11 @@ public record EstabResponse(
         String address,
         String time,
         String phone,
-
         String linkWhatsapp,
         CategoryResponse category,
         List<ServiceResponse> services,
         List<ImageResponse> images,
-        Boolean active
+        Boolean activeOwner,
+        Boolean activeAdmin
 ) {
 }

@@ -9,6 +9,8 @@ public record EstabResumeResponse(
         String descriptionCurta,
         String address,
         String category,
-        String imageCapa
+        String imageCapa,
+        Boolean activeOwner,
+        Boolean activeAdmin
 ) {
 }

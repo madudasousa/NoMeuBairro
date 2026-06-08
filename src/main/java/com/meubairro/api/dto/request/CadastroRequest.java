@@ -1,6 +1,6 @@
 package com.meubairro.api.dto.request;
 
-import com.meubairro.api.domain.User.PerfilUser;
+import com.meubairro.api.domain.PerfilUser;
 
 public record CadastroRequest(
         String nome,

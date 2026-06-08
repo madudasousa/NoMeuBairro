@@ -1,5 +1,6 @@
 package com.meubairro.api.controller;
 
+import com.meubairro.api.dto.request.AdminStatusRequest;
 import com.meubairro.api.dto.request.EstabCreateRequest;
 import com.meubairro.api.dto.request.EstabUpdateRequest;
 import com.meubairro.api.dto.request.FiltroEstabRequest;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,7 +41,7 @@ public class EstabController {
         return ResponseEntity.ok(service.createEstab(request));
      }
 
-     @GetMapping
+    @GetMapping
     @ResponseBody
     public  ResponseEntity<Page<EstabResumeResponse>> listar(
              @RequestParam(required = false) String name,
@@ -51,32 +53,46 @@ public class EstabController {
          return ResponseEntity.ok(service.listar(filtro, pageable));
      }
 
-     @GetMapping("/{id}")
-        @ResponseBody
+    @GetMapping("/{id}")
+    @ResponseBody
         public ResponseEntity<EstabResponse> buscarPorId(@PathVariable UUID id){
-         return ResponseEntity.ok(service.buscarPorId(id));
-     }
+            return ResponseEntity.ok(service.buscarPorId(id));
+    }
 
      //editar dados principais de um estabelecimento
-     @PutMapping("/{id}")
+    @PutMapping("/{id}")
     @ResponseBody
+    @PreAuthorize("hasRole('DONO')")
     public ResponseEntity<EstabResponse> editar(@PathVariable UUID id, @RequestBody EstabUpdateRequest request){
          return ResponseEntity.ok(service.editar(id, request));
      }
 
      //ativar e desativar um estabelecimento
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Void> alterarStatus(@PathVariable UUID id, @RequestParam Boolean active){
-        service.alterarStatus(id, active);
+    @ResponseBody
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<Void> alterarStatusAdmin(@PathVariable UUID id, @RequestParam AdminStatusRequest request){
+        service.alterarStatusAdmin(id, request.activeAdmin());
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/admin/todos")
+    @ResponseBody
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<Page<EstabResumeResponse>> listarTodosParaAdmin(
+            @PageableDefault(size = 50) Pageable pageable) {
+        return ResponseEntity.ok(service.listarTodosParaAdmin(pageable));
+    }
+
+
 
     //deletar permaneenteemente um estabelecimento
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable UUID id){
-        service.deletar(id);
-        return ResponseEntity.noContent().build();
-    }
-
+    //@DeleteMapping("/{id}")
+    //@ResponseBody
+    //@PreAuthorize("hasRole('ADM')")
+    //public ResponseEntity<Void> deletar(@PathVariable UUID id) {
+      //  service.deletar(id);
+       // return ResponseEntity.noContent().build();
+   // }
 }
 

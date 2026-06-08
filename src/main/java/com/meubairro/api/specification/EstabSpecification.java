@@ -1,6 +1,6 @@
 package com.meubairro.api.specification;
 
-import com.meubairro.api.domain.estab.Estab;
+import com.meubairro.api.domain.Estab;
 import com.meubairro.api.dto.request.FiltroEstabRequest;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -14,7 +14,8 @@ public class EstabSpecification {
         return (root, query, cb) ->{
             List<jakarta.persistence.criteria.Predicate> predicates = new ArrayList<>();
 
-            predicates.add(cb.isTrue(root.get("active")));
+            predicates.add(cb.isTrue(root.get("activeOwner")));
+            predicates.add(cb.isTrue(root.get("activeAdmin")));
 
             if (filtro.name() != null && !filtro.name().isBlank()){
                 predicates.add(cb.like(

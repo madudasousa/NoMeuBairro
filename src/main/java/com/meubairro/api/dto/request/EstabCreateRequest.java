@@ -13,6 +13,7 @@ public record EstabCreateRequest(
         UUID categoryId,
         List<String> services,
         Boolean active,
+        String ownerName,
         String document,
         String password
 ) {}

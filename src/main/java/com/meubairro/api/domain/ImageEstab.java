@@ -1,6 +1,5 @@
-package com.meubairro.api.domain.image;
+package com.meubairro.api.domain;
 
-import com.meubairro.api.domain.estab.Estab;
 import jakarta.persistence.*;
 import lombok.*;
 

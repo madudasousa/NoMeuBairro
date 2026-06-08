@@ -1,7 +1,7 @@
 package com.meubairro.api.service;
 
-import com.meubairro.api.domain.estab.Estab;
-import com.meubairro.api.domain.services.Services;
+import com.meubairro.api.domain.Estab;
+import com.meubairro.api.domain.Services;
 import com.meubairro.api.dto.request.ServiceRequest;
 import com.meubairro.api.dto.response.ServiceResponse;
 import com.meubairro.api.repositories.EstabRepository;

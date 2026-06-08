@@ -1,7 +1,9 @@
 package com.meubairro.api.service;
 
-import com.meubairro.api.domain.category.Category;
-import com.meubairro.api.domain.estab.Estab;
+import com.meubairro.api.domain.Category;
+import com.meubairro.api.domain.Estab;
+import com.meubairro.api.domain.PerfilUser;
+import com.meubairro.api.domain.User;
 import com.meubairro.api.dto.request.EstabCreateRequest;
 import com.meubairro.api.dto.request.EstabUpdateRequest;
 import com.meubairro.api.dto.request.FiltroEstabRequest;
@@ -59,7 +61,8 @@ public class EstabService {
                 .time(request.time())
                 .phone(request.phone())
                 .category(category)
-                .active(request.active() != null ? request.active() : true)
+                .activeOwner(true)
+                .activeAdmin(true)
                 .services(new ArrayList<>())
                 .images(new ArrayList<>())
                 .build();
@@ -70,12 +73,21 @@ public class EstabService {
         if (request.services() != null && !request.services().isEmpty()){
         servicesService.salvar(salvo.getId(), new ServiceRequest(request.services()));
         }
+
+        User dono = User.builder()
+                .name(request.ownerName() != null ? request.ownerName().trim() : request.name())
+                .document(document)
+                .password(passwordEncoder.encode(request.password()))
+                .perfil(PerfilUser.DONO)
+                .estab(salvo)
+                .build();
+
+        userRepository.save(dono);
         return mapper.toResponse(buscarEntidadePorId(salvo.getId()));
     }
 
     //busca os estabelecimentos ativos para a home com filtros e paginação
-    public Page<EstabResumeResponse> listar(
-            FiltroEstabRequest filtro, Pageable pageable){
+    public Page<EstabResumeResponse> listar(FiltroEstabRequest filtro, Pageable pageable){
         return repository
                 .findAll(EstabSpecification.comfiltros(filtro),pageable)
                 .map(mapper::toResume);
@@ -95,18 +107,20 @@ public class EstabService {
         if (request.address() != null) estab.setAddress(request.address());
         if (request.time() != null) estab.setTime(request.time());
         if (request.phone() != null) estab.setPhone(request.phone());
-        if (request.active() != null) estab.setActive(request.active());
         if (request.categoryId() != null){
             Category novacategory = categoryService.buscarEntidadePorId(request.categoryId());
             estab.setCategory(novacategory);
+        }
+        if (request.activeOwner() != null) {
+            estab.setActiveOwner(request.activeOwner());
         }
         return mapper.toResponse(repository.save(estab));
     }
 
     @Transactional
-    public void alterarStatus(UUID id, Boolean active){
+    public void alterarStatusAdmin(UUID id, Boolean activeAdmin){
         Estab estab = buscarEntidadePorId(id);
-        estab.setActive(active);
+        estab.setActiveAdmin(activeAdmin);
         repository.save(estab);
     }
 
@@ -125,6 +139,10 @@ public class EstabService {
 
     public Estab findById(UUID id) {
         return buscarEntidadePorId(id);
+    }
+
+    public Page<EstabResumeResponse> listarTodosParaAdmin(Pageable pageable) {
+        return repository.findAll(pageable).map(mapper::toResume);
     }
 
     private String limparDocumento(String document){

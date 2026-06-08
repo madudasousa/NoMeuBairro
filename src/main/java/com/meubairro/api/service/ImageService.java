@@ -1,7 +1,7 @@
 package com.meubairro.api.service;
 
-import com.meubairro.api.domain.estab.Estab;
-import com.meubairro.api.domain.image.ImageEstab;
+import com.meubairro.api.domain.Estab;
+import com.meubairro.api.domain.ImageEstab;
 import com.meubairro.api.dto.request.ImageRequest;
 import com.meubairro.api.dto.response.ImageResponse;
 import com.meubairro.api.repositories.ImageEstabRepository;
