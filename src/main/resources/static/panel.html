@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoMeuBairro - Minha Loja</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<header class="home-header" onclick="window.location.href='/home.html'" style="cursor:pointer;">
+    <div class="brand">
+        <div class="brand__icon">
+            <img src="/img/logo.png" alt="NoMeuBairro" class="brand__logo" />
+        </div>
+        <div class="brand__text">
+            <div class="brand__title">NoMeuBairro</div>
+            <div class="brand__subtitle">Painel do Estabelecimento</div>
+        </div>
+    </div>
+</header>
+
+<main class="page">
+    <section class="card">
+
+        <!-- STATUS DA LOJA -->
+        <div class="painel-status" id="painelStatus"></div>
+
+        <h1 class="card__title">Minha Loja</h1>
+
+        <!-- FORMULÁRIO DE DADOS -->
+        <form id="formDados">
+
+            <div class="field">
+                <label for="p-nome">Nome do estabelecimento:</label>
+                <input id="p-nome" type="text" />
+            </div>
+
+            <div class="field">
+                <label for="p-categoria">Categoria:</label>
+                <input id="p-categoria" type="text" disabled style="background:#f5f5f5;color:#888;" />
+                <small class="hint">Para alterar a categoria entre em contato com o suporte.</small>
+            </div>
+
+            <div class="field">
+                <label for="p-descricao">Descrição:</label>
+                <textarea id="p-descricao"></textarea>
+            </div>
+
+            <div class="field">
+                <label for="p-address">Endereço:</label>
+                <input id="p-address" type="text" />
+            </div>
+
+            <div class="field">
+                <label for="p-time">Horário de funcionamento:</label>
+                <input id="p-time" type="text" />
+            </div>
+
+            <div class="field">
+                <label for="p-phone">WhatsApp:</label>
+                <input id="p-phone" type="text" inputmode="numeric" />
+            </div>
+
+            <!-- Checkbox de ativação pelo dono -->
+            <div class="field field--checkbox" id="wrapActiveOwner">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="p-activeOwner" />
+                    <span>Loja ativa (visível para os clientes)</span>
+                </label>
+                <small class="hint" id="hintActiveAdmin"></small>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn--primary">Salvar alterações</button>
+            </div>
+            <div class="toast" id="toastDados" role="status"></div>
+        </form>
+
+        <hr style="margin: 32px 0; border-color: #e2e8f0;" />
+
+        <!-- FORMULÁRIO DE TROCA DE SENHA -->
+        <h2 class="card__title" style="font-size:18px;">Alterar Senha</h2>
+
+        <form id="formSenha">
+            <div class="field">
+                <label for="p-senhaAtual">Senha atual:</label>
+                <input id="p-senhaAtual" type="password" placeholder="Digite sua senha atual" />
+                <small class="error" id="erroSenhaAtual"></small>
+            </div>
+
+            <div class="field">
+                <label for="p-novaSenha">Nova senha:</label>
+                <input id="p-novaSenha" type="password" placeholder="Mínimo 6 caracteres" />
+            </div>
+
+            <div class="field">
+                <label for="p-confirmaSenha">Confirmar nova senha:</label>
+                <input id="p-confirmaSenha" type="password" placeholder="Repita a nova senha" />
+                <small class="error" id="erroSenha"></small>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn--primary">Alterar senha</button>
+            </div>
+            <div class="toast" id="toastSenha" role="status"></div>
+        </form>
+
+        <hr style="margin: 32px 0; border-color: #e2e8f0;" />
+
+        <!-- LOGOUT -->
+        <button class="btn btn--ghost" id="btnLogout" style="width:100%;color:#e53e3e;">
+            🚪 Sair da conta
+        </button>
+
+    </section>
+</main>
+
+<script src="/panel.js"></script>
+</body>
+</html>

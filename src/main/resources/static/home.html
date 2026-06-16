@@ -21,12 +21,14 @@
           </div>
         </div>
 
-        <div class="header__auth" id="headerAuth" onclick="window.location.href='/login_cadastro.html'" style="cursor:pointer;">
-          <img src="/img/login.png" alt="Login" class="header__auth-icon" onerror="this.style.display='none';document.getElementById('headerAuthText').style.display='block'"/>
-          <span id="headerAuthText" style="display:none;"></span>
-        </div>
-      </header>
-
+        <div class="header__auth" id="headerAuth"></div>
+      </header
+      <!-- Dropdown do menu do usuário logado — oculto por padrão -->
+      <div class="auth-dropdown" id="authDropdown">
+        <div class="auth-dropdown__name" id="authDropdownName"></div>
+        <a class="auth-dropdown__item" id="authDropdownLoja" href="#">🏪 Minha Loja</a>
+        <button class="auth-dropdown__item auth-dropdown__logout" id="authLogoutBtn">🚪 Sair</button>
+      </div>
       <!-- HERO / BANNER -->
       <section class="hero">
         <h2 class="hero__title">Descubra os Comércios do Seu Bairro</h2>
@@ -51,14 +53,12 @@
       <!-- CATEGORIAS -->
       <section class="categories">
         <div class="categories__tags" id="categoryTags">
-          <!-- JS -->
         </div>
       </section>
 
       <!-- LISTA DAS SEÇÕES -->
-      <section id="sectionsContainer" class="sections-container">
-        <!-- JS -->
-      </section>
+      <section id="sectionsContainer" class="sections-container"></section>
+
       <div class="cadastrar-btn-wrap">
         <button class="btn-cadastrar-estab" id="btnCadastrarEstab">
           PARA CADASTRAR SEU ESTABELECIMENTO, CLIQUE AQUI

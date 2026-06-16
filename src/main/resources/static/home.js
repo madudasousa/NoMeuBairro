@@ -29,32 +29,73 @@ function showError(message) {
   `;
 }
 
-/* BOTÃO CADASTRAR E ÍCONE DE LOGIN */
+/* AUTH — ícone de login / dropdown de perfil */
 function configurarAuth() {
-  const usuario = localStorage.getItem("usuario");
   const headerAuth = document.getElementById("headerAuth");
-  const headerAuthText = document.getElementById("headerAuthText");
+  const dropdown = document.getElementById("authDropdown");
+  const dropdownName = document.getElementById("authDropdownName");
+  const dropdownLoja = document.getElementById("authDropdownLoja");
+  const logoutBtn = document.getElementById("authLogoutBtn");
+  const btnCadastrar = document.getElementById("btnCadastrarEstab");
 
-  if (usuario) {
-    // Usuário logado — mostra o nome e vai para área do usuário ao clicar
-    const dados = JSON.parse(usuario);
-    headerAuthText.textContent = dados.nome.split(" ")[0]; // só o primeiro nome
-    headerAuthText.style.display = "block";
-    headerAuth.querySelector("img")?.remove();
-    headerAuth.title = "Logado como " + dados.nome;
+  const usuarioStr = localStorage.getItem("usuario");
+  const token = localStorage.getItem("token");
+
+  if (token && usuarioStr) {
+    // Usuário logado — mostra primeiro nome como ícone clicável
+    const usuario = JSON.parse(usuarioStr);
+    const primeiroNome = usuario.nome.split(" ")[0];
+
+    headerAuth.innerHTML = `
+      <button class="header__auth-btn header__auth-btn--logged" id="authToggleBtn">
+        👤 ${primeiroNome}
+      </button>
+    `;
+
+    dropdownName.textContent = usuario.nome;
+
+    // DONO vai para o painel da loja | ADM vai para o dashboard
+    if (usuario.perfil === "ADM") {
+      dropdownLoja.textContent = "📊 Painel Admin";
+      dropdownLoja.href = "/admin.html";
+    } else {
+      dropdownLoja.textContent = "🏪 Minha Loja";
+      dropdownLoja.href = "/painel.html";
+    }
+
+    // Toggle do dropdown ao clicar no ícone
+    document.getElementById("authToggleBtn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle("is-open");
+    });
+
+    // Fechar dropdown ao clicar fora
+    document.addEventListener("click", () => dropdown.classList.remove("is-open"));
+
+    // Logout — limpa localStorage e recarrega
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("usuario");
+      window.location.reload();
+    });
+
+  } else {
+    // Não logado — mostra ícone que vai para o login
+    headerAuth.innerHTML = `
+      <button class="header__auth-btn" onclick="window.location.href='/login.html'">
+        👤 Entrar
+      </button>`;
   }
 
-  // Botão de cadastrar estabelecimento
-  document.getElementById("btnCadastrarEstab").addEventListener("click", () => {
-    const token = localStorage.getItem("token");
+  // Botão cadastrar — logado vai para cadastro, não logado vai para login
+  /*btnCadastrar.addEventListener("click", () => {
     if (token) {
-      // Logado — vai direto para o cadastro
       window.location.href = "/cadastro.html";
     } else {
-      // Não logado — vai para o login
       window.location.href = "/login.html";
     }
   });
+*/
 }
 
 async function fetchCategorias() {
@@ -113,21 +154,18 @@ function getGroupedByCategory(items) {
     if (!grouped[cat]) grouped[cat] = [];
     grouped[cat].push(item);
   });
-
   return grouped;
 }
 
 /*RENDER CATEGORIAS*/
 function renderCategoryTags() {
   categoryTagsEl.innerHTML = "";
-
   allCategories.forEach((category) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className =
         "category-tag" + (activeCategory === category.slug ? " is-active" : "");
     button.textContent = category.name;
-
     button.addEventListener("click", () => {
       // Clicou na categoria já ativa → desativa o filtro
       activeCategory = activeCategory === category.slug ? "" : category.slug;
@@ -135,7 +173,6 @@ function renderCategoryTags() {
       // Busca novamente na API com o novo filtro de categoria
       fetchEstabelecimentos();
     });
-
     categoryTagsEl.appendChild(button);
   });
 }
@@ -144,7 +181,6 @@ function renderCategoryTags() {
 function createCard(item) {
   const card = document.createElement("article");
   card.className = "store-card-mini";
-
   card.innerHTML = `
     <div class="store-card-mini__image">
       <img src="${item.imageCapa || ""}" alt="${item.name}">
@@ -159,13 +195,9 @@ function createCard(item) {
       <div class="store-card-mini__footer">Abrir info</div>
     </div>
   `;
-
-  // Ao clicar no card, salva o ID na URL e navega para a tela de detalhes
-  // O estab.js vai ler esse ID e buscar os dados completos na API
   card.addEventListener("click", () => {
     window.location.href = `/estab.html?id=${item.id}`;
   });
-
   return card;
 }
 
@@ -176,22 +208,17 @@ function renderSections() {
   const visibleCategories = Object.keys(grouped).filter(
       (cat) => grouped[cat].length > 0
   );
-
   sectionsContainerEl.innerHTML = "";
 
   if (!visibleCategories.length) {
     sectionsContainerEl.innerHTML = `
-      <div class="empty-state">
-        Nenhum estabelecimento encontrado para essa busca.
-      </div>
-    `;
+      <div class="empty-state"> Nenhum estabelecimento encontrado para essa busca. </div>`;
     return;
   }
 
   visibleCategories.forEach((category) => {
     const section = document.createElement("section");
     section.className = "category-section";
-
     const header = document.createElement("div");
     header.className = "category-section__header";
     header.innerHTML = `
@@ -201,9 +228,7 @@ function renderSections() {
 
     const row = document.createElement("div");
     row.className = "cards-row";
-
     grouped[category].forEach((item) => row.appendChild(createCard(item)));
-
     section.appendChild(header);
     section.appendChild(row);
     sectionsContainerEl.appendChild(section);
@@ -216,7 +241,6 @@ searchFormEl.addEventListener("submit", (e) => {
   currentSearch = searchInputEl.value.trim();
   fetchEstabelecimentos();
 });
-
 searchInputEl.addEventListener("input", () => {
   currentSearch = searchInputEl.value.trim();
   renderSections();

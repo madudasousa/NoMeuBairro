@@ -3,6 +3,7 @@ package com.meubairro.api.controller;
 import com.meubairro.api.domain.User;
 import com.meubairro.api.dto.request.ChangePasswordRequest;
 import com.meubairro.api.dto.request.LoginRequest;
+import com.meubairro.api.dto.request.CadastroRequest;
 import com.meubairro.api.dto.response.EstabResponse;
 import com.meubairro.api.dto.response.LoginResponse;
 import com.meubairro.api.service.EstabService;
@@ -31,6 +32,16 @@ public class UserController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(Map.of("erro", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/registro")
+    public ResponseEntity<?> registro(@RequestBody CadastroRequest request) {
+        try {
+            LoginResponse response = userService.registrar(request);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("erro", e.getMessage()));
         }
     }
 

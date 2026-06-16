@@ -1,8 +1,10 @@
 package com.meubairro.api.service;
 
 import com.meubairro.api.domain.User;
+import com.meubairro.api.domain.PerfilUser;
 import com.meubairro.api.dto.request.ChangePasswordRequest;
 import com.meubairro.api.dto.request.LoginRequest;
+import com.meubairro.api.dto.request.CadastroRequest;
 import com.meubairro.api.dto.response.LoginResponse;
 import com.meubairro.api.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -48,7 +50,7 @@ public class UserService implements UserDetailsService {
         }
         String token = jwtService.gerarToken(user);
 
-        return new LoginResponse(token, user.getId(), user.getName(), user.getPerfil());
+        return new LoginResponse(token, user.getId(), user.getName(), user.getPerfil().toString());
     }
 
     @Transactional
@@ -80,4 +82,26 @@ public class UserService implements UserDetailsService {
     private String limparDocumento(String document){
         return (document == null ? "" : document).replaceAll("[^0-9]", "");
     }
+
+    @Transactional
+    public LoginResponse registrar(CadastroRequest request) {
+        String documento = limparDocumento(request.documento());
+
+        if (repository.existsByDocument(documento)) {
+            throw new RuntimeException("Este CPF/CNPJ já está registrado.");
+        }
+
+        User user = User.builder()
+                .name(request.nome())
+                .document(documento)
+                .password(passwordEncoder.encode(request.senha()))
+                .perfil(request.perfil())
+                .build();
+
+        user = repository.save(user);
+        String token = jwtService.gerarToken(user);
+
+        return new LoginResponse(token, user.getId(), user.getName(), user.getPerfil().toString());
+    }
+
 }

@@ -14,8 +14,8 @@ public interface EstabRepository extends
         JpaRepository <Estab, UUID>,
         JpaSpecificationExecutor<Estab> {
 
-    // Busca todos os estabelecimentos ativos com paginação.
-    Page<Estab> findByActiveTrue(Pageable pageable);
+    // Busca todos os estabelecimentos ativos (ativo pelo dono E aprovado pelo admin) com paginação.
+    Page<Estab> findByActiveOwnerTrueAndActiveAdminTrue(Pageable pageable);
 
     //verifica se ja existe um estabelecimento com o mesmo nome
     boolean existsByNameIgnoreCase(String name);

@@ -12,4 +12,3 @@ CREATE TABLE estabs(
     createAt TIMESTAMP NOT NULL,
     updateAt TIMESTAMP NOT NULL
 );
-

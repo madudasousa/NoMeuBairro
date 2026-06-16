@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoMeuBairro - Painel Admin</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<header class="home-header">
+    <div class="brand" onclick="window.location.href='/home.html'" style="cursor:pointer;">
+        <div class="brand__icon">
+            <img src="/img/logo.png" alt="NoMeuBairro" class="brand__logo" />
+        </div>
+        <div class="brand__text">
+            <div class="brand__title">NoMeuBairro</div>
+            <div class="brand__subtitle">Painel do Administrador</div>
+        </div>
+    </div>
+    <button class="header__auth-btn" id="btnLogoutAdmin">🚪 Sair</button>
+</header>
+
+<main class="page">
+    <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h1 class="card__title" style="margin:0;">Estabelecimentos</h1>
+            <div class="admin-legenda">
+                <span class="legenda-item legenda--ativo">● Ativo</span>
+                <span class="legenda-item legenda--owner">● Pausado pelo dono</span>
+                <span class="legenda-item legenda--admin">● Bloqueado pelo admin</span>
+            </div>
+        </div>
+
+        <!-- Busca rápida local -->
+        <input type="text" id="adminSearch" class="search-box__input"
+               placeholder="Filtrar por nome..." style="margin-bottom:16px;width:100%;" />
+
+        <!-- Lista de estabelecimentos -->
+        <div id="adminLista"></div>
+
+        <div class="toast" id="toastAdmin" role="status"></div>
+    </section>
+</main>
+
+<script src="/admin.js"></script>
+</body>
+</html>

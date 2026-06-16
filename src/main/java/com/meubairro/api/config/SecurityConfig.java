@@ -1,7 +1,6 @@
 package com.meubairro.api.config;
 
 import com.meubairro.api.security.JwtFilter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +20,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
 
+    public SecurityConfig(@Lazy JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http
                 // Desativa CSRF — não necessário para APIs REST com JWT
                 .csrf(AbstractHttpConfigurer::disable)
@@ -37,6 +39,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/usuarios/login").permitAll()
+                        .requestMatchers("/usuarios/registro").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/categorias", "/categorias/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/estabelecimentos", "/estabelecimentos/**").permitAll()
@@ -61,7 +64,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
         return config.getAuthenticationManager();
     }
 }
