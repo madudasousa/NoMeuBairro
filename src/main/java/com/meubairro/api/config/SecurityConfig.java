@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/usuarios/registro").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/categorias", "/categorias/**").permitAll()
+                        .requestMatchers("/estabelecimentos/admin/**").hasAuthority("ROLE_ADM")
                         .requestMatchers(HttpMethod.GET, "/estabelecimentos", "/estabelecimentos/**").permitAll()
                         // Cadastro de estab é público — cria dono + estab de uma vez
                         .requestMatchers(HttpMethod.POST, "/estabelecimentos").permitAll()

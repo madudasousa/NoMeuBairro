@@ -4,7 +4,7 @@ const API_URL = "http://localhost:8080";
 const token = localStorage.getItem("token");
 const usuarioStr = localStorage.getItem("usuario");
 if (!token || !usuarioStr) {
-    window.location.href = "/login_cadastro.html";
+    window.location.href = "/login.html";
 }
 
 const usuario = JSON.parse(usuarioStr);
@@ -35,7 +35,7 @@ async function carregarDados() {
             // Token expirado — desloga
             localStorage.removeItem("token");
             localStorage.removeItem("usuario");
-            window.location.href = "/login_cadastro.html";
+            window.location.href = "/login.html";
             return;
         }
 

@@ -124,7 +124,7 @@ $("#formEstabelecimento").addEventListener("submit", async (e) => {
   const categoryId = await obterOuCriarCategoria(nomeCategoria);
 
   const payload = {
-    document: $("documento").value,
+    document: $("#documento").value,
     name: $("#nome").value,
     description: $("#descricao").value,
     address: $("#bairro").value,
@@ -140,7 +140,8 @@ $("#formEstabelecimento").addEventListener("submit", async (e) => {
     // 1. Criar Estabelecimento
     const resEstab = await fetch("http://localhost:8080/estabelecimentos", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" ,
+                "Authorization": "Bearer " + token},
       body: JSON.stringify(payload)
     });
 

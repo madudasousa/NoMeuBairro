@@ -11,21 +11,27 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.UUID;
 
 @Controller
-@RequestMapping({"/estabelecimentos", "/estabalecimentos"})
+@RequestMapping({"/estabelecimentos"})
 @RequiredArgsConstructor
 public class EstabController {
 
     private final EstabService service;
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public ModelAndView home() {
-        return new ModelAndView("home");
+        return new ModelAndView("forward:/home.html");
+    }
+
+    @GetMapping("/cadastro")
+    public ModelAndView abrirCadastro() {
+        return new ModelAndView("forward:/cadastro.html");
     }
 
     @PostMapping
@@ -55,23 +61,37 @@ public class EstabController {
      //editar dados principais de um estabelecimento
     @PutMapping("/{id}")
     @ResponseBody
+    @PreAuthorize("hasRole('DONO')")
     public ResponseEntity<EstabResponse> editar(@PathVariable UUID id, @RequestBody EstabUpdateRequest request){
          return ResponseEntity.ok(service.editar(id, request));
     }
 
-     //ativar e desativar um estabelecimento
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<Void> alterarStatus(@PathVariable UUID id, @RequestParam Boolean active){
-        service.alterarStatusAdmin(id, active);
+    // Lista TODOS os estabelecimentos sem filtro de ativação — uso exclusivo do painel ADM
+    @GetMapping("/admin/todos")
+    @ResponseBody
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<Page<EstabResumeResponse>> listarTodosParaAdmin(
+            @PageableDefault(size = 50) Pageable pageable) {
+        return ResponseEntity.ok(service.listarTodosParaAdmin(pageable));
+    }
+
+    // Ação soberana do ADM — bloqueia/libera, dono não pode reverter
+    @PatchMapping("/{id}/admin-status")
+    @ResponseBody
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<Void> alterarStatusAdmin(
+            @PathVariable UUID id,
+            @RequestBody com.meubairro.api.dto.request.AdminStatusRequest request) {
+        service.alterarStatusAdmin(id, request.activeAdmin());
         return ResponseEntity.noContent().build();
     }
 
     //deletar permaneenteemente um estabelecimento
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADM')")
     public ResponseEntity<Void> deletar(@PathVariable UUID id){
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
 }
 

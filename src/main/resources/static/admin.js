@@ -2,10 +2,10 @@ const API_URL = "http://localhost:8080";
 
 // Redireciona para login se não for ADM
 // LER O TOKEN E USUARIO DO LOCALSTORAGE AQUI PARA GARANTIR QUE ESTÃO ATUALIZADOS
-const currentToken = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 const currentUsuarioStr = localStorage.getItem("usuario");
 
-if (!currentToken || !currentUsuarioStr) {
+if (!token || !currentUsuarioStr) {
     window.location.href = "/login.html"; // Corrigido para /login.html
 } else {
     const usuario = JSON.parse(currentUsuarioStr);
@@ -14,13 +14,15 @@ if (!currentToken || !currentUsuarioStr) {
     }
 }
 
-
 let todosEstabs = [];
 
 // FUNÇÃO authHeaders AGORA LÊ O TOKEN DO LOCALSTORAGE A CADA CHAMADA
 function authHeaders() {
-    const token = localStorage.getItem("token"); // Lê o token mais recente
-    return { "Content-Type": "application/json", "Authorization": `Bearer ${token}` };
+    const tokenAtual = localStorage.getItem("token");
+    return {
+        "Authorization": "Bearer " + tokenAtual,
+        "Content-Type": "application/json"
+    };
 }
 
 function showToast(message, type = "ok") {
@@ -33,29 +35,27 @@ function showToast(message, type = "ok") {
 
 /* CARREGAR TODOS OS ESTABELECIMENTOS */
 async function carregarEstabs() {
-    const lista = document.getElementById("adminLista");
-    lista.innerHTML = `<div class="empty-state">Carregando...</div>`;
+   const lista = document.getElementById("adminLista");
+    const token = localStorage.getItem("token");
 
     try {
-        const res = await fetch(`${API_URL}/estabelecimentos/admin/todos?size=100`, {
-            headers: authHeaders()
+        const res = await fetch(`${API_URL}/estabelecimentos/admin/todos`, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            }
         });
 
-        if (res.status === 401) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("usuario");
-            window.location.href = "/login.html"; // Corrigido para /login.html
-            return;
-        }
+        if (!res.ok) throw new Error("Erro na requisição");
 
-        if (!res.ok) throw new Error();
-
-        const page = await res.json();
-        todosEstabs = page.content || [];
+        const dados = await res.json();
+        // Se o seu endpoint retornar uma paginação do Spring (Page), lembre-se de usar dados.content
+        todosEstabs = Array.isArray(dados) ? dados : (dados.content || []);
         renderLista(todosEstabs);
 
     } catch (err) {
-        lista.innerHTML = `<div class="empty-state">Erro ao carregar estabelecimentos.</div>`;
+        showToast("Erro ao carregar os estabelecimentos.", "err");
     }
 }
 

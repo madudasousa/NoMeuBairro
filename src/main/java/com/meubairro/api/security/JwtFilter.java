@@ -36,27 +36,45 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
+        // DEBUG TEMPORÁRIO —
+        System.out.println("=== JWT FILTER DEBUG ===");
+        System.out.println("URI: " + request.getRequestURI());
+        System.out.println("Authorization header: " + authHeader);
+
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             String documento = jwtService.validarToken(token);
+
+            System.out.println("Documento extraido do token: '" + documento + "'");
 
             // Se o token for válido e ainda não houver autenticação na sessão
             if (!documento.isEmpty() && SecurityContextHolder.getContext().getAuthentication() == null) {
                 try {
                     UserDetails user = userService.loadUserByUsername(documento);
 
+                    System.out.println("Usuario carregado: " + user.getUsername());
+                    System.out.println("Authorities: " + user.getAuthorities());
+
                     // Registra o usuário como autenticado no contexto do Spring Security
                     UsernamePasswordAuthenticationToken auth =
                             new UsernamePasswordAuthenticationToken(
-                                    user, null, user.getAuthorities()
-                            );
+                                    user, null, user.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(auth);
+
+                    System.out.println("Autenticacao definida no SecurityContext com sucesso!");
+
                 } catch (Exception e) {
-                    // Se o usuário não for encontrado ou ocorrer erro, não autentica
-                    // e deixa a requisição seguir como não autenticada
+                    System.out.println("ERRO ao carregar usuario: " + e.getMessage());
+                    e.printStackTrace();
                 }
+            } else {
+                System.out.println("Documento vazio ou ja autenticado anteriormente.");
             }
+        } else {
+            System.out.println("Sem header Authorization ou nao comeca com 'Bearer '");
         }
+
+        System.out.println("========================");
 
         // Continua a requisição para o próximo filtro ou controller
         filterChain.doFilter(request, response);
