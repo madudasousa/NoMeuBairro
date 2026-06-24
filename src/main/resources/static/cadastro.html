@@ -22,6 +22,10 @@
         </div>
       </header>
 
+      <nav class="nav-arrows">
+        <button class="nav-arrow" id="btnVoltar" onclick="history.back()"
+                style="display:none">&#8592; </button>
+      </nav>
       <script>
         if (document.referrer) {
           document.getElementById("btnVoltar").style.display = "inline-block";
@@ -38,17 +42,24 @@
             <small class="error" data-error-for="nome"></small>
           </div>
 
+            <div class="field">
+                <label for="ownerName">Nome do responsável:</label>
+                <input id="ownerName" name="ownerName" type="text" placeholder="Ex: João da Silva" />
+                <small class="error" data-error-for="ownerName"></small>
+            </div>
+
           <div class="field">
             <label for="ownerDoc">CPF ou CNPJ:</label>
             <input id="ownerDoc" name="ownerDoc" type="text" inputmode="numeric" placeholder="000.000.000-00 ou 00.000.000/0001-00" />
-            <small class="hint">Será usado para fazer login. Pode ser CPF mesmo sem CNPJ.</small>
             <small class="error" data-error-for="ownerDoc"></small>
           </div>
 
           <div class="field">
             <label for="categoriaInput">Categoria:</label>
-            <input list="categoriasExistentes" id="categoriaInput" placeholder="Busque ou digite uma nova..."/>
-            <datalist id="categoriasExistentes"></datalist>
+              <input list="categoriasExistentes" id="categoriaInput"
+                     placeholder="Digite ou selecione uma categoria..." autocomplete="off"/>
+              <datalist id="categoriasExistentes"></datalist>
+              <small class="hint">Se a categoria não existir, será criada automaticamente.</small>
             <small class="error" data-error-for="categoriaInput"></small>
           </div>
 

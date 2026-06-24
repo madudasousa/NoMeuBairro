@@ -49,7 +49,6 @@ public class UserService implements UserDetailsService {
             }
         }
         String token = jwtService.gerarToken(user);
-
         return new LoginResponse(token, user.getId(), user.getName(), user.getPerfil().toString());
     }
 
